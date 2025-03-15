@@ -454,8 +454,8 @@ typedef struct
   __O  uint32_t FEED;                   /*!< Offset: 0x008 Watchdog feed sequence register (W) */
   __I  uint32_t TV;                     /*!< Offset: 0x00C Watchdog timer value register (R) */
        uint32_t RESERVED0;
-  __IO uint32_t WARNINT;				/*!< Offset: 0x014 Watchdog timer warning int. register (R/W) */
-  __IO uint32_t WINDOW;					/*!< Offset: 0x018 Watchdog timer window value register (R/W) */
+  __IO uint32_t WARNINT;        /*!< Offset: 0x014 Watchdog timer warning int. register (R/W) */
+  __IO uint32_t WINDOW;         /*!< Offset: 0x018 Watchdog timer window value register (R/W) */
 } LPC_WDT_TypeDef;
 /*@}*/ /* end of group LPC11xx_WDT */
 
@@ -482,7 +482,7 @@ typedef struct
 */
 typedef struct
 {
-  __IO uint32_t CNTL;				/* 0x000 */
+  __IO uint32_t CNTL;       /* 0x000 */
   __IO uint32_t STAT;
   __IO uint32_t EC;
   __IO uint32_t BT;
@@ -490,7 +490,7 @@ typedef struct
   __IO uint32_t TEST;
   __IO uint32_t BRPE;
        uint32_t RESERVED0;
-  __IO uint32_t IF1_CMDREQ;			/* 0x020 */
+  __IO uint32_t IF1_CMDREQ;     /* 0x020 */
   __IO uint32_t IF1_CMDMSK;
   __IO uint32_t IF1_MSK1;
   __IO uint32_t IF1_MSK2;
@@ -502,7 +502,7 @@ typedef struct
   __IO uint32_t IF1_DB1;
   __IO uint32_t IF1_DB2;
        uint32_t RESERVED1[13];
-  __IO uint32_t IF2_CMDREQ;			/* 0x080 */
+  __IO uint32_t IF2_CMDREQ;     /* 0x080 */
   __IO uint32_t IF2_CMDMSK;
   __IO uint32_t IF2_MSK1;
   __IO uint32_t IF2_MSK2;
@@ -514,19 +514,19 @@ typedef struct
   __IO uint32_t IF2_DB1;
   __IO uint32_t IF2_DB2;
        uint32_t RESERVED2[21];
-  __I  uint32_t TXREQ1;				/* 0x100 */
+  __I  uint32_t TXREQ1;       /* 0x100 */
   __I  uint32_t TXREQ2;
        uint32_t RESERVED3[6];
-  __I  uint32_t ND1;				/* 0x120 */
+  __I  uint32_t ND1;        /* 0x120 */
   __I  uint32_t ND2;
        uint32_t RESERVED4[6];
-  __I  uint32_t IR1;				/* 0x140 */
+  __I  uint32_t IR1;        /* 0x140 */
   __I  uint32_t IR2;
        uint32_t RESERVED5[6];
-  __I  uint32_t MSGV1;				/* 0x160 */
+  __I  uint32_t MSGV1;        /* 0x160 */
   __I  uint32_t MSGV2;
        uint32_t RESERVED6[6];
-  __IO uint32_t CLKDIV;				/* 0x180 */
+  __IO uint32_t CLKDIV;       /* 0x180 */
 } LPC_CAN_TypeDef;
 /*@}*/ /* end of group LPC11xx_CAN */
 
