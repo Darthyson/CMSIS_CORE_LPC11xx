@@ -122,11 +122,26 @@ set(CXX_FLAGS
         -fno-rtti
 )
 
+# from MCUXpresso sblib Debug build
+# -D__NEWLIB__ -DDEBUG -DCORE_M0 -D__USE_CMSIS=CMSIS_CORE_LPC11xx -D__LPC11XX__
+# -O0 -g3 -gdwarf-4 -Wall -c
+# -fmessage-length=0 -fno-builtin -ffunction-sections -fdata-sections -fno-rtti -fno-exceptions -fmerge-constants
+# -fmacro-prefix-map="$(<D)/"=
+# -mcpu=cortex-m0 -mthumb -D__NEWLIB__ -fstack-usage -specs=nano.specs
+# Additional debug flags to add to CXX_FLAGS
 set(CXX_FLAGS_DEBUG
         -DDEBUG
         -O0
 )
 
+# from MCUXpresso sblib Release build
+# -D__NEWLIB__ -DNDEBUG -DCORE_M0 -D__USE_CMSIS=CMSIS_CORE_LPC11xx -D__LPC11XX__
+# -Os -g -gdwarf-4 -Wall -c
+# -fmessage-length=0 -fno-builtin -ffunction-sections -fdata-sections -fno-rtti -fno-exceptions
+# -flto -ffat-lto-objects
+# -fmacro-prefix-map="$(<D)/"=
+# -mcpu=cortex-m0 -mthumb -D__NEWLIB__ -fstack-usage -specs=nano.specs
+# Additional release flags to add to CXX_FLAGS
 set(CXX_FLAGS_RELEASE
         -DNDEBUG
         -Os
