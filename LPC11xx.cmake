@@ -105,9 +105,13 @@ string(JOIN " " C_FLAGS_STR ${C_FLAGS}) # Join C_FLAGS into a single space-separ
 string(JOIN " " C_FLAGS_DEBUG_STR ${C_FLAGS_DEBUG})
 string(JOIN " " C_FLAGS_RELEASE_STR ${C_FLAGS_RELEASE})
 
-set(CMAKE_C_FLAGS_INIT ${C_FLAGS_STR} CACHE INTERNAL "C compiler default flags")
-set(CMAKE_C_FLAGS_DEBUG_INIT ${C_FLAGS_DEBUG_STR} CACHE INTERNAL "C compiler Debug flags")
-set(CMAKE_C_FLAGS_RELEASE_INIT ${C_FLAGS_RELEASE_STR} CACHE INTERNAL "C compiler Release flags")
+set(CMAKE_C_FLAGS_INIT ${C_FLAGS_STR} CACHE INTERNAL "C compiler default flags" FORCE)
+set(CMAKE_C_FLAGS_DEBUG_INIT ${C_FLAGS_DEBUG_STR} CACHE INTERNAL "C compiler Debug flags" FORCE)
+set(CMAKE_C_FLAGS_RELEASE_INIT ${C_FLAGS_RELEASE_STR} CACHE INTERNAL "C compiler Release flags" FORCE)
+
+set(CMAKE_C_FLAGS ${CMAKE_C_FLAGS_INIT} CACHE INTERNAL "C compiler default flags" FORCE)
+set(CMAKE_C_FLAGS_DEBUG ${CMAKE_C_FLAGS_DEBUG_INIT} CACHE INTERNAL "C compiler Debug flags" FORCE)
+set(CMAKE_C_FLAGS_RELEASE ${CMAKE_C_FLAGS_RELEASE_INIT} CACHE INTERNAL "C compiler Release flags" FORCE)
 
 #todo -fmacro-prefix-map doesn´t work as expected yet
 # -Wextra
@@ -117,9 +121,9 @@ set(CXX_FLAGS
         -g3
         -gdwarf-4
         -c
-        -fmessage-length=0 -fno-builtin -ffunction-sections -fdata-sections -fno-exceptions -fmerge-constants
-        -mcpu=cortex-m0 -mthumb -fstack-usage -specs=nano.specs
-        -fno-rtti
+        -fmessage-length=0 -fno-builtin -ffunction-sections -fdata-sections -fno-rtti -fno-exceptions
+        -fmerge-constants -mcpu=cortex-m0 -mthumb -fstack-usage -specs=nano.specs
+        -fmacro-prefix-map="${CMAKE_SOURCE_DIR}/"=
 )
 
 # from MCUXpresso sblib Debug build
@@ -152,7 +156,11 @@ set(CXX_FLAGS_RELEASE
 string(JOIN " " CXX_FLAGS_STR ${CXX_FLAGS}) # Join CXX_FLAGS into a single space-separated string
 string(JOIN " " CXX_FLAGS_DEBUG_STR ${CXX_FLAGS_DEBUG})
 string(JOIN " " CXX_FLAGS_RELEASE_STR ${CXX_FLAGS_RELEASE})
-set(CMAKE_CXX_FLAGS_INIT ${CXX_FLAGS_STR} CACHE INTERNAL "C++ compiler default flags")
-set(CMAKE_CXX_FLAGS_DEBUG_INIT ${CXX_FLAGS_DEBUG_STR} CACHE INTERNAL "C++ compiler Debug flags")
-set(CMAKE_CXX_FLAGS_RELEASE_INIT ${CXX_FLAGS_RELEASE_STR} CACHE INTERNAL "C++ compiler Release flags")
+set(CMAKE_CXX_FLAGS_INIT ${CXX_FLAGS_STR} CACHE INTERNAL "C++ compiler default flags" FORCE)
+set(CMAKE_CXX_FLAGS_DEBUG_INIT ${CXX_FLAGS_DEBUG_STR} CACHE INTERNAL "C++ compiler Debug flags" FORCE)
+set(CMAKE_CXX_FLAGS_RELEASE_INIT ${CXX_FLAGS_RELEASE_STR} CACHE INTERNAL "C++ compiler Release flags" FORCE)
+
+set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS_INIT} CACHE INTERNAL "C++ compiler default flags" FORCE)
+set(CMAKE_CXX_FLAGS_DEBUG ${CMAKE_CXX_FLAGS_DEBUG_INIT} CACHE INTERNAL "C++ compiler Debug flags" FORCE)
+set(CMAKE_CXX_FLAGS_RELEASE ${CMAKE_CXX_FLAGS_RELEASE_INIT} CACHE INTERNAL "C++ compiler Release flags" FORCE)
 
