@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.30)
 
 # Set toolchain file if not specified
 if(NOT DEFINED CMAKE_TOOLCHAIN_FILE)
-    set(CMAKE_TOOLCHAIN_FILE ${CMAKE_CURRENT_LIST_DIR}/LPC11xx.cmake)
+    set(CMAKE_TOOLCHAIN_FILE ${CMAKE_SOURCE_DIR}/LPC11xx.cmake)
     message(STATUS "Toolchain file (LPC11xx): " ${CMAKE_TOOLCHAIN_FILE})
 endif()
 if(NOT EXISTS ${CMAKE_TOOLCHAIN_FILE})
@@ -20,7 +20,7 @@ set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS Debug Release)
 
 include_directories(inc)
 
-add_library(CMSIS_CORE_LPC11xx
+add_library(CMSIS_CORE_LPC11xx STATIC
         inc/core_cm0.h
         inc/core_cmFunc.h
         inc/core_cmInstr.h
