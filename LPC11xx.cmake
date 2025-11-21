@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.31)
     if(NOT TOOLCHAIN_PREFIX)
         message(FATAL_ERROR "No TOOLCHAIN_PREFIX specified.\
-                Specify path to arm-none-eabi toolchain with e.g. --DTOOLCHAIN_PREFIX=C:/nxp/MCUXpressoIDE_24.12.148/ide/tools")
+                Specify path to arm-none-eabi toolchain with e.g. --DTOOLCHAIN_PREFIX=C:/nxp/MCUXpressoIDE_25.6.136/ide/tools")
     endif()
 
     set(CMAKE_SYSTEM_NAME Generic)
