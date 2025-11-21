@@ -25,7 +25,7 @@ cmake_minimum_required(VERSION 3.31)
             message(NOTICE "Could not check MCUXpresso version. Build may not work correctly.")
         endif()
     else()
-        message(NOTICE "Could find MCUXpresso in ${TOOLCHAIN_PREFIX}. Build may not work correctly.")
+        message(NOTICE "Could not find MCUXpresso in ${TOOLCHAIN_PREFIX}. Build may not work correctly.")
     endif()
 
     set(TARGET_TRIPLET "arm-none-eabi")
