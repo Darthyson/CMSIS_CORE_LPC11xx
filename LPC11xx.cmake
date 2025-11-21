@@ -35,6 +35,17 @@ cmake_minimum_required(VERSION 3.31)
     set(BOOT_LINK1 ${MCUX_IDE_BIN}/boot_link1 CACHE FILEPATH "link1")
     set(BOOT_LINK2 ${MCUX_IDE_BIN}/boot_link2 CACHE FILEPATH "link2")
     set(REDLINK ${MCUX_IDE_BIN}/crt_emu_cm_redlink CACHE FILEPATH "redlink")
+    if(NOT EXISTS ${BOOT_LINK1})
+        message(FATAL_ERROR "boot_link1 file does not exist: " ${BOOT_LINK1})
+    endif()
+
+    if(NOT EXISTS ${BOOT_LINK2})
+        message(FATAL_ERROR "boot_link2 file does not exist: " ${BOOT_LINK2})
+    endif()
+
+    if(NOT EXISTS ${REDLINK})
+        message(FATAL_ERROR "crt_emu_cm_redlink file does not exist: " ${REDLINK})
+    endif()
 
     get_filename_component(TOOLCHAIN_BIN_DIR ${TOOLCHAIN_PREFIX}/bin REALPATH CACHE)
     get_filename_component(TOOLCHAIN_INC_DIR ${TOOLCHAIN_PREFIX}/${TARGET_TRIPLET}/include REALPATH CACHE)
