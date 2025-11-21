@@ -8,6 +8,7 @@ cmake_minimum_required(VERSION 3.31)
     set(CMAKE_SYSTEM_VERSION 1)
     set(CMAKE_SYSTEM_PROCESSOR arm)
 
+    set(MIN_MCUXPRESSO_VERSION_SUPPORTED "11.9.0") # 11.9.0.2144 changed path from ../ide/binaries to ../ide/LinkServer/binaries
 
     # MCUXpresso version check
     string(TOLOWER "${TOOLCHAIN_PREFIX}" LOWER_TOOLCHAIN_PREFIX)
@@ -18,8 +19,8 @@ cmake_minimum_required(VERSION 3.31)
         if(NOT ${MCUXPRESSO_VERSION} STREQUAL "")
             message(STATUS "MCUXpresso detected: v" ${MCUXPRESSO_VERSION})
             # Check if version is supported
-            if(${MCUXPRESSO_VERSION} VERSION_LESS "7.6.2")
-                message(FATAL_ERROR "MCUXpresso version not supported: " ${MCUXPRESSO_VERSION})
+            if(${MCUXPRESSO_VERSION} VERSION_LESS ${MIN_MCUXPRESSO_VERSION_SUPPORTED})
+                message(FATAL_ERROR "MCUXpresso version not supported: ${MCUXPRESSO_VERSION}. Use ${MIN_MCUXPRESSO_VERSION_SUPPORTED} or newer.")
             endif()
         else()
             message(NOTICE "Could not check MCUXpresso version. Build may not work correctly.")
@@ -28,13 +29,19 @@ cmake_minimum_required(VERSION 3.31)
         message(NOTICE "Could not find MCUXpresso in ${TOOLCHAIN_PREFIX}. Build may not work correctly.")
     endif()
 
+    if(CMAKE_HOST_EXECUTABLE_SUFFIX STREQUAL ".exe") # CMAKE_HOST_EXECUTABLE_SUFFIX since CMake 3.31
+        set(BATCH_SUFFIX ".cmd")
+    else()
+        set(BATCH_SUFFIX "")
+    endif()
+
     set(TARGET_TRIPLET "arm-none-eabi")
 
     # Where we find NXP tools for flashing and debugging
-    get_filename_component(MCUX_IDE_BIN ${TOOLCHAIN_PREFIX}/../binaries/ REALPATH CACHE)
-    set(BOOT_LINK1 ${MCUX_IDE_BIN}/boot_link1 CACHE FILEPATH "link1")
-    set(BOOT_LINK2 ${MCUX_IDE_BIN}/boot_link2 CACHE FILEPATH "link2")
-    set(REDLINK ${MCUX_IDE_BIN}/crt_emu_cm_redlink CACHE FILEPATH "redlink")
+    get_filename_component(LINK_SERVER_BIN ${TOOLCHAIN_PREFIX}/../LinkServer/binaries REALPATH CACHE "Path to LinkServer binaries")
+    set(BOOT_LINK1 ${LINK_SERVER_BIN}/boot_link1${BATCH_SUFFIX} CACHE FILEPATH "boot_link1 Filename")
+    set(BOOT_LINK2 ${LINK_SERVER_BIN}/boot_link2${BATCH_SUFFIX} CACHE FILEPATH "boot_link2 Filename")
+    set(REDLINK ${LINK_SERVER_BIN}/crt_emu_cm_redlink${CMAKE_HOST_EXECUTABLE_SUFFIX} CACHE FILEPATH "redlink")
     if(NOT EXISTS ${BOOT_LINK1})
         message(FATAL_ERROR "boot_link1 file does not exist: " ${BOOT_LINK1})
     endif()
