@@ -109,12 +109,6 @@ cmake_minimum_required(VERSION 3.31)
     set(CMAKE_CXX_COMPILER_ID_RUN   TRUE)
     set(CMAKE_CXX_COMPILER_FORCED   TRUE)
 
-
-add_compile_definitions("__USE_CMSIS=CMSIS_CORE_LPC11xx")
-add_compile_definitions("__LPC11XX__")
-add_compile_definitions("__NEWLIB__")
-add_compile_definitions("CORE_M0")
-
 set(C_FLAGS
         -Wall -Wlogical-op -Wextra
         -std=c17
