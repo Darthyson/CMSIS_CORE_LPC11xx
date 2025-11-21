@@ -7,9 +7,7 @@ cmake_minimum_required(VERSION 3.31)
     set(CMAKE_SYSTEM_NAME Generic)
     set(CMAKE_SYSTEM_VERSION 1)
     set(CMAKE_SYSTEM_PROCESSOR arm)
-#    set(LPC11XX_CHAIN_INITIALIZED "yes" CACHE INTERNAL "Has the LPC11xx toolchain been pulled?")
 
-    get_filename_component(BUILD_DIR_PREFIX ${CMAKE_BINARY_DIR} NAME CACHE)
 
     # MCUXpresso version check
     string(TOLOWER "${TOOLCHAIN_PREFIX}" LOWER_TOOLCHAIN_PREFIX)
