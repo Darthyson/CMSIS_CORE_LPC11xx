@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.30)
+cmake_minimum_required(VERSION 3.31)
     if(NOT TOOLCHAIN_PREFIX)
         message(FATAL_ERROR "No TOOLCHAIN_PREFIX specified.\
                 Specify path to arm-none-eabi toolchain with e.g. --DTOOLCHAIN_PREFIX=C:/nxp/MCUXpressoIDE_24.12.148/ide/tools")
@@ -41,10 +41,6 @@ cmake_minimum_required(VERSION 3.30)
     get_filename_component(TOOLCHAIN_BIN_DIR ${TOOLCHAIN_PREFIX}/bin REALPATH CACHE)
     get_filename_component(TOOLCHAIN_INC_DIR ${TOOLCHAIN_PREFIX}/${TARGET_TRIPLET}/include REALPATH CACHE)
     get_filename_component(TOOLCHAIN_LIB_DIR ${TOOLCHAIN_PREFIX}/${TARGET_TRIPLET}/lib REALPATH CACHE)
-
-    if(NOT CMAKE_HOST_EXECUTABLE_SUFFIX) #todo CMAKE_HOST_EXECUTABLE_SUFFIX is added in CMake 3.31
-        set(CMAKE_HOST_EXECUTABLE_SUFFIX ".exe" CACHE STRING "Host executable suffix")
-    endif()
 
     set(TOOLS_PREFIX ${TOOLCHAIN_BIN_DIR}/${TARGET_TRIPLET})
     set(CMAKE_C_COMPILER ${TOOLS_PREFIX}-gcc${CMAKE_HOST_EXECUTABLE_SUFFIX} CACHE FILEPATH "c compiler")

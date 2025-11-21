@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.30)
+cmake_minimum_required(VERSION 3.31)
 
 # Set toolchain file if not specified
 if(NOT DEFINED CMAKE_TOOLCHAIN_FILE)
