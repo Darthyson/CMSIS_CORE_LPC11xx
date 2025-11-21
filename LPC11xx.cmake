@@ -49,8 +49,8 @@ cmake_minimum_required(VERSION 3.31)
     set(CMAKE_OBJCOPY ${TOOLS_PREFIX}-objcopy${CMAKE_HOST_EXECUTABLE_SUFFIX} CACHE FILEPATH "objcopy")
     set(CMAKE_OBJDUMP ${TOOLS_PREFIX}-objdump${CMAKE_HOST_EXECUTABLE_SUFFIX} CACHE FILEPATH "objdump")
     set(CMAKE_AR ${TOOLS_PREFIX}-ar${CMAKE_HOST_EXECUTABLE_SUFFIX} CACHE FILEPATH "archiver")
-    set(CMAKE_STRIP ${TOOLS_PREFIX}-strip${CMAKE_EXECUTABLE_SUFFIX} CACHE FILEPATH "strip")
-    set(CMAKE_SIZE ${TOOLS_PREFIX}-size${CMAKE_EXECUTABLE_SUFFIX} CACHE FILEPATH "size")
+    set(CMAKE_STRIP ${TOOLS_PREFIX}-strip${CMAKE_HOST_EXECUTABLE_SUFFIX} CACHE FILEPATH "strip")
+    set(CMAKE_SIZE ${TOOLS_PREFIX}-size${CMAKE_HOST_EXECUTABLE_SUFFIX} CACHE FILEPATH "size")
 
     # Adjust the default behaviour of the FIND_XXX() commands:
     # i)    Search headers and libraries in the target environment
