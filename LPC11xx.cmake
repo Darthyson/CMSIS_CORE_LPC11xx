@@ -109,89 +109,46 @@ cmake_minimum_required(VERSION 3.31)
     set(CMAKE_CXX_COMPILER_ID_RUN   TRUE)
     set(CMAKE_CXX_COMPILER_FORCED   TRUE)
 
-set(C_FLAGS
-        -Wall -Wlogical-op -Wextra
-        -std=c17
-        -g3
-        -gdwarf-4
-        -c
-        -fmessage-length=0 -fno-builtin -ffunction-sections -fdata-sections -fno-exceptions -fmerge-constants
-        -mcpu=cortex-m0 -mthumb -fstack-usage -specs=nano.specs
+
+
+set(FLAGS_LIST 
+    -Wall -Wlogical-op -Wextra
+    -g3 -gdwarf-4
+    -fmessage-length=0 -fno-builtin -ffunction-sections -fdata-sections -fno-exceptions
+    -fmerge-constants -mcpu=cortex-m0 -mthumb -fstack-usage -specs=nano.specs
+    -fmacro-prefix-map=\"${CMAKE_SOURCE_DIR}/\"=
 )
-#todo -fmacro-prefix-map doesn´t work as expected yet
-#-fmacro-prefix-map="${CMAKE_SOURCE_DIR}/"=
-set(C_FLAGS_DEBUG
-        -DDEBUG
-        -O0
-)
+string(JOIN " " FLAGS ${FLAGS_LIST})
 
-set(C_FLAGS_RELEASE
-        -DNDEBUG
-        -Os
-        -flto
-        -ffat-lto-objects
-)
+set(FLAGS_DEBUG "-O0")
+set(FLAGS_RELEASE "-Os -flto -ffat-lto-objects")
 
-string(JOIN " " C_FLAGS_STR ${C_FLAGS}) # Join C_FLAGS into a single space-separated string
-string(JOIN " " C_FLAGS_DEBUG_STR ${C_FLAGS_DEBUG})
-string(JOIN " " C_FLAGS_RELEASE_STR ${C_FLAGS_RELEASE})
+# Set initial C flags 
+set(CMAKE_C_FLAGS_INIT ${FLAGS} CACHE INTERNAL "C compiler default flags" FORCE)
+set(CMAKE_C_FLAGS_DEBUG_INIT ${FLAGS_DEBUG} CACHE INTERNAL "C compiler Debug flags" FORCE)
+set(CMAKE_C_FLAGS_RELEASE_INIT ${FLAGS_RELEASE} CACHE INTERNAL "C compiler Release flags" FORCE)
 
-set(CMAKE_C_FLAGS_INIT ${C_FLAGS_STR} CACHE INTERNAL "C compiler default flags" FORCE)
-set(CMAKE_C_FLAGS_DEBUG_INIT ${C_FLAGS_DEBUG_STR} CACHE INTERNAL "C compiler Debug flags" FORCE)
-set(CMAKE_C_FLAGS_RELEASE_INIT ${C_FLAGS_RELEASE_STR} CACHE INTERNAL "C compiler Release flags" FORCE)
+# Set initial C++ flags
+set(CMAKE_CXX_FLAGS_INIT ${FLAGS} CACHE INTERNAL "C++ compiler default flags" FORCE)
+set(CMAKE_CXX_FLAGS_DEBUG_INIT ${FLAGS_DEBUG} CACHE INTERNAL "C++ compiler Debug flags" FORCE)
+set(CMAKE_CXX_FLAGS_RELEASE_INIT ${FLAGS_RELEASE} CACHE INTERNAL "C++ compiler Release flags" FORCE)
 
-set(CMAKE_C_FLAGS ${CMAKE_C_FLAGS_INIT} CACHE INTERNAL "C compiler default flags" FORCE)
-set(CMAKE_C_FLAGS_DEBUG ${CMAKE_C_FLAGS_DEBUG_INIT} CACHE INTERNAL "C compiler Debug flags" FORCE)
-set(CMAKE_C_FLAGS_RELEASE ${CMAKE_C_FLAGS_RELEASE_INIT} CACHE INTERNAL "C compiler Release flags" FORCE)
+# todo: Set initial, debug and release ASM flags
+#set(CMAKE_ASM<DIALECT>_FLAGS_INIT.
+#    ""
+#    CACHE INTERNAL "ASM compiler default flags" FORCE
+#)
 
-#todo -fmacro-prefix-map doesn´t work as expected yet
-# -Wextra
-set(CXX_FLAGS
-        -Wall -Wlogical-op -Woverloaded-virtual
-        -std=c++17
-        -g3
-        -gdwarf-4
-        -c
-        -fmessage-length=0 -fno-builtin -ffunction-sections -fdata-sections -fno-rtti -fno-exceptions
-        -fmerge-constants -mcpu=cortex-m0 -mthumb -fstack-usage -specs=nano.specs
-        -fmacro-prefix-map="${CMAKE_SOURCE_DIR}/"=
-)
-
-# from MCUXpresso sblib Debug build
-# -D__NEWLIB__ -DDEBUG -DCORE_M0 -D__USE_CMSIS=CMSIS_CORE_LPC11xx -D__LPC11XX__
-# -O0 -g3 -gdwarf-4 -Wall -c
-# -fmessage-length=0 -fno-builtin -ffunction-sections -fdata-sections -fno-rtti -fno-exceptions -fmerge-constants
-# -fmacro-prefix-map="$(<D)/"=
-# -mcpu=cortex-m0 -mthumb -D__NEWLIB__ -fstack-usage -specs=nano.specs
-# Additional debug flags to add to CXX_FLAGS
-set(CXX_FLAGS_DEBUG
-        -DDEBUG
-        -O0
-)
-
-# from MCUXpresso sblib Release build
-# -D__NEWLIB__ -DNDEBUG -DCORE_M0 -D__USE_CMSIS=CMSIS_CORE_LPC11xx -D__LPC11XX__
-# -Os -g -gdwarf-4 -Wall -c
-# -fmessage-length=0 -fno-builtin -ffunction-sections -fdata-sections -fno-rtti -fno-exceptions
-# -flto -ffat-lto-objects
-# -fmacro-prefix-map="$(<D)/"=
-# -mcpu=cortex-m0 -mthumb -D__NEWLIB__ -fstack-usage -specs=nano.specs
-# Additional release flags to add to CXX_FLAGS
-set(CXX_FLAGS_RELEASE
-        -DNDEBUG
-        -Os
-        -flto
-        -ffat-lto-objects
-)
-
-string(JOIN " " CXX_FLAGS_STR ${CXX_FLAGS}) # Join CXX_FLAGS into a single space-separated string
-string(JOIN " " CXX_FLAGS_DEBUG_STR ${CXX_FLAGS_DEBUG})
-string(JOIN " " CXX_FLAGS_RELEASE_STR ${CXX_FLAGS_RELEASE})
-set(CMAKE_CXX_FLAGS_INIT ${CXX_FLAGS_STR} CACHE INTERNAL "C++ compiler default flags" FORCE)
-set(CMAKE_CXX_FLAGS_DEBUG_INIT ${CXX_FLAGS_DEBUG_STR} CACHE INTERNAL "C++ compiler Debug flags" FORCE)
-set(CMAKE_CXX_FLAGS_RELEASE_INIT ${CXX_FLAGS_RELEASE_STR} CACHE INTERNAL "C++ compiler Release flags" FORCE)
-
-set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS_INIT} CACHE INTERNAL "C++ compiler default flags" FORCE)
-set(CMAKE_CXX_FLAGS_DEBUG ${CMAKE_CXX_FLAGS_DEBUG_INIT} CACHE INTERNAL "C++ compiler Debug flags" FORCE)
-set(CMAKE_CXX_FLAGS_RELEASE ${CMAKE_CXX_FLAGS_RELEASE_INIT} CACHE INTERNAL "C++ compiler Release flags" FORCE)
-
+# todo: Set initial linker flags
+#set(CMAKE_EXE_LINKER_FLAGS_INIT
+#    ""
+#    CACHE INTERNAL "Executable linker default flags" FORCE
+#)
+#set(CMAKE_EXE_LINKER_FLAGS_DEBUG_INIT
+#    ""
+#    CACHE INTERNAL "Executable linker default flags" FORCE
+#)
+#set(CMAKE_EXE_LINKER_FLAGS_RELEASE_INIT
+#    ""
+#    CACHE INTERNAL "Executable linker default flags" FORCE
+#)
