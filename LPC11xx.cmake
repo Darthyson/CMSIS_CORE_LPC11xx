@@ -12,7 +12,7 @@ cmake_minimum_required(VERSION 3.31)
 
     # MCUXpresso version check
     string(TOLOWER "${TOOLCHAIN_PREFIX}" LOWER_TOOLCHAIN_PREFIX)
-    string(REGEX MATCH "mcuxpressoide" MATCH_STR TOLOWER ${LOWER_TOOLCHAIN_PREFIX})
+    string(REGEX MATCH "mcuxpressoide" MATCH_STR ${LOWER_TOOLCHAIN_PREFIX})
     if(NOT ${MATCH_STR} STREQUAL "")
         # Get version from specified path prefix
         string(REGEX MATCH "([0-9]+.[0-9]+.[0-9]+)" MCUXPRESSO_VERSION ${TOOLCHAIN_PREFIX})
