@@ -1,30 +1,56 @@
 cmake_minimum_required(VERSION 3.31)
 
-# Set toolchain file if not specified
-if(NOT DEFINED CMAKE_TOOLCHAIN_FILE)
-    set(CMAKE_TOOLCHAIN_FILE ${CMAKE_SOURCE_DIR}/LPC11xx.cmake)
-    message(STATUS "Toolchain file (LPC11xx): " ${CMAKE_TOOLCHAIN_FILE})
+if(CMAKE_CROSSCOMPILING AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
+    message(WARNING "Cross-compiling but CMAKE_TOOLCHAIN_FILE not set. Configure with -DCMAKE_TOOLCHAIN_FILE=<path>.")
 endif()
-if(NOT EXISTS ${CMAKE_TOOLCHAIN_FILE})
-    message(FATAL_ERROR "Toolchain file does not exist: " ${CMAKE_TOOLCHAIN_FILE})
+if(CMAKE_CROSSCOMPILING AND DEFINED CMAKE_TOOLCHAIN_FILE AND NOT EXISTS "${CMAKE_TOOLCHAIN_FILE}")
+    message(FATAL_ERROR "Toolchain file does not exist: ${CMAKE_TOOLCHAIN_FILE}")
 endif()
 
 project(CMSIS_CORE_LPC11xx LANGUAGES C)
 set(CMAKE_VERBOSE_MAKEFILE ON CACHE BOOL "Enable verbose output from the build system" FORCE)
 set(CMAKE_C_STANDARD 17)
 set(CMAKE_C_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 
 set(CMAKE_BUILD_TYPE "Debug" CACHE STRING "How to build")
 set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS Debug Release)
 
-include_directories(inc)
+set(LPC11XX_ARM ${PROJECT_NAME}_arm)
+set(LPC11XX_X86 ${PROJECT_NAME}_x86)
+set(LPC11XX_X64 ${PROJECT_NAME}_x64)
 
-add_library(CMSIS_CORE_LPC11xx STATIC
-        inc/core_cm0.h
-        inc/core_cmFunc.h
-        inc/core_cmInstr.h
-        inc/LPC11xx.h
-        inc/system_LPC11xx.h
-        src/system_LPC11xx.c
+include(LPC11xx_src.cmake) # list of all cmsis_core source code files (*.h, *.cpp, ...)
+
+# ARM Target
+add_library(${LPC11XX_ARM} STATIC ${CMSIS_CORE_LPC11XX_SRC})
+target_include_directories(${LPC11XX_ARM} PUBLIC
+        ${CMAKE_CURRENT_SOURCE_DIR}/inc
+)
+
+target_compile_definitions(${LPC11XX_ARM} PUBLIC
+        __USE_CMSIS=CMSIS_CORE_LPC11xx
+        # __REDLIB__
+        # __CODE_RED
+        # $<$<CONFIG:Debug>: TEST_SYMBOL_IN_DEBUG>
+        # $<$<CONFIG:Release>: TEST_SYMBOL_IN_RELEASE>
+)
+
+target_compile_options(${LPC11XX_ARM} PRIVATE
+    $<$<CONFIG:Debug>: -O0 -DDEBUG>
+    $<$<CONFIG:Release>: -Os>
+)
+
+# x86 Target
+add_library(${LPC11XX_X86} STATIC ${CMSIS_CORE_LPC11XX_SRC})
+target_include_directories(${LPC11XX_X86} PUBLIC
+        ${CMAKE_CURRENT_SOURCE_DIR}/inc
+)
+
+# x64 Target
+add_library(${LPC11XX_X64} STATIC ${CMSIS_CORE_LPC11XX_SRC})
+target_include_directories(${LPC11XX_X64} PUBLIC
+        ${CMAKE_CURRENT_SOURCE_DIR}/inc
 )
