@@ -28,6 +28,7 @@
 *.app
 
 # Build folders
+build/
 cmake-build*
 Debug*
 Release*
