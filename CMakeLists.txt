@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.31)
 
 if(CMAKE_CROSSCOMPILING AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
-    message(WARNING "Cross-compiling but CMAKE_TOOLCHAIN_FILE not set. Configure with -DCMAKE_TOOLCHAIN_FILE=<path>.")
+    message(WARNING "Cross-compiling but CMAKE_TOOLCHAIN_FILE not set. Configure with -DCMAKE_TOOLCHAIN_FILE=<path to>/arm-none-eabi_mcuxpresso.cmake")
 endif()
 if(CMAKE_CROSSCOMPILING AND DEFINED CMAKE_TOOLCHAIN_FILE AND NOT EXISTS "${CMAKE_TOOLCHAIN_FILE}")
     message(FATAL_ERROR "Toolchain file does not exist: ${CMAKE_TOOLCHAIN_FILE}")
