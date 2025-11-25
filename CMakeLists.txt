@@ -20,13 +20,7 @@ set(LPC11XX_X64 ${PROJECT_NAME}_x64)
 
 include(LPC11xx_src.cmake) # list of all cmsis_core source code files (*.h, *.cpp, ...)
 
-# ARM Target
-add_library(${LPC11XX_ARM} STATIC ${CMSIS_CORE_LPC11XX_SRC})
-target_include_directories(${LPC11XX_ARM} PUBLIC
-        ${CMAKE_CURRENT_SOURCE_DIR}/inc
-)
-
-target_compile_definitions(${LPC11XX_ARM} PUBLIC
+add_compile_definitions(${LPC11XX_ARM} PUBLIC
         __USE_CMSIS=CMSIS_CORE_LPC11xx
         # __REDLIB__
         # __CODE_RED
@@ -34,19 +28,41 @@ target_compile_definitions(${LPC11XX_ARM} PUBLIC
         # $<$<CONFIG:Release>: TEST_SYMBOL_IN_RELEASE>
 )
 
-target_compile_options(${LPC11XX_ARM} PRIVATE
+# Check if cross-compiling for ARM target
+if(CMAKE_CROSSCOMPILING)
+    add_library(${LPC11XX_ARM} STATIC ${CMSIS_CORE_LPC11XX_SRC})
+    target_include_directories(${LPC11XX_ARM} PUBLIC
+            ${CMAKE_CURRENT_SOURCE_DIR}/inc
+    )
+
+    target_compile_options(${LPC11XX_ARM} PRIVATE
     $<$<CONFIG:Debug>: -O0 -DDEBUG>
     $<$<CONFIG:Release>: -Os>
-)
+    )
+# Check if building for 32bit architecture
+elseif(CMSIS_ARCHITECTURE STREQUAL "x86")
+    add_library(${LPC11XX_X86} STATIC ${CMSIS_CORE_LPC11XX_SRC})
+    target_include_directories(${LPC11XX_X86} PUBLIC
+            ${CMAKE_CURRENT_SOURCE_DIR}/inc
+    )
 
-# x86 Target
-add_library(${LPC11XX_X86} STATIC ${CMSIS_CORE_LPC11XX_SRC})
-target_include_directories(${LPC11XX_X86} PUBLIC
-        ${CMAKE_CURRENT_SOURCE_DIR}/inc
-)
-
-# x64 Target
-add_library(${LPC11XX_X64} STATIC ${CMSIS_CORE_LPC11XX_SRC})
-target_include_directories(${LPC11XX_X64} PUBLIC
-        ${CMAKE_CURRENT_SOURCE_DIR}/inc
-)
+    target_compile_options(${LPC11XX_X86} PRIVATE
+        -m32
+        $<$<CONFIG:Debug>: -O0 -DDEBUG>
+        $<$<CONFIG:Release>: -Os>
+    )
+# Check if building for 64bit architecture
+elseif(CMSIS_ARCHITECTURE STREQUAL "x64")
+    add_library(${LPC11XX_X64} STATIC ${CMSIS_CORE_LPC11XX_SRC})
+    target_include_directories(${LPC11XX_X64} PUBLIC
+            ${CMAKE_CURRENT_SOURCE_DIR}/inc
+    )
+            
+    target_compile_options(${LPC11XX_X64} PRIVATE
+        -m64
+        $<$<CONFIG:Debug>: -O0 -DDEBUG>
+        $<$<CONFIG:Release>: -Os>
+    )
+else()
+    message(FATAL_ERROR "Unknown architecture. (project ${PROJECT_NAME})")
+endif()
