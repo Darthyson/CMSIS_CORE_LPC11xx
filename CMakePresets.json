@@ -7,70 +7,38 @@
     },
     "configurePresets": [
         {
-            "name": "default-arm",
-            "hidden": true,
-            "generator": "Ninja",
-            "environment": {
-                "MCUXPRESSO_TOOLCHAIN_PATH": "C:/nxp/MCUXpressoIDE_25.6.136/ide/tools"
-            },
+            "name": "arm",
+            "displayName": "ARM Target",
+            "hidden": false,
+            "generator": "Ninja Multi-Config",
             "binaryDir": "${sourceDir}/cmake-build/${presetName}",
-            "cacheVariables": {
-                "TOOLCHAIN_PREFIX": {
-                    "type": "STRING",
-                    "value": "$env{MCUXPRESSO_TOOLCHAIN_PATH}"
-                }
-            },
             "toolchainFile": "${sourceDir}/../software-arm-lib/cmake/toolchains/arm-none-eabi_mcuxpresso.cmake"
-        },
-        {
-            "name": "debug-arm",
-            "displayName": "ARM Debug Configure",
-            "description": "Sets Toolchain LPC11xx, Debug build directory and Ninja generator",
-            "inherits": [
-                "default-arm"
-            ],
-            "hidden": false,
-            "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Debug"
-            }
-        },
-        {
-            "name": "release-arm",
-            "displayName": "ARM Release Configure",
-            "description": "Sets Toolchain LPC11xx, Release build directory and Ninja generator",
-            "inherits": [
-                "default-arm"
-            ],
-            "hidden": false,
-            "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Release"
-            }
         }
     ],
     "buildPresets": [
         {
-            "name": "Debug-arm",
-            "configurePreset": "debug-arm",
+            "name": "debug-arm",
+            "configurePreset": "arm",
+            "configuration": "Debug",
             "displayName": "ARM Target Debug Build",
             "description": "Builds all targets in Debug configuration",
             "hidden": false,
             "verbose": true,
             "targets": [
                 "CMSIS_CORE_LPC11xx_arm"
-            ],
-            "jobs": 16
+            ]
         },
         {
-            "name": "Release-arm",
-            "configurePreset": "release-arm",
+            "name": "release-arm",
+            "configurePreset": "arm",
+            "configuration": "Release",
             "displayName": "ARM Target Release Build", 
             "description": "Builds all targets in Release configuration",          
             "hidden": false,
             "verbose": true,
             "targets": [
                 "CMSIS_CORE_LPC11xx_arm"
-            ],
-            "jobs": 16
+            ]
         }
     ]
 }
