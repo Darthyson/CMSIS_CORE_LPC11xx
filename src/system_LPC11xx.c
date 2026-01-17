@@ -207,7 +207,7 @@
 /*----------------------------------------------------------------------------
   DEFINES
  *----------------------------------------------------------------------------*/
-
+    
 /*----------------------------------------------------------------------------
   Define clocks
  *----------------------------------------------------------------------------*/
@@ -289,7 +289,7 @@
       #define __MAIN_CLOCK             (0)
     #endif
 
-    #define __SYSTEM_CLOCK             (__MAIN_CLOCK / SYSAHBCLKDIV_Val)
+    #define __SYSTEM_CLOCK             (__MAIN_CLOCK / SYSAHBCLKDIV_Val)         
 
   #else // SYSCLK_SETUP
     #if (SYSAHBCLKDIV_Val == 0)
@@ -301,7 +301,7 @@
 
 #else
   #define __SYSTEM_CLOCK               (__XTAL)
-#endif  // CLOCK_SETUP
+#endif  // CLOCK_SETUP 
 
 
 /*----------------------------------------------------------------------------
@@ -335,10 +335,9 @@ void SystemCoreClockUpdate (void)            /* Get Core Clock Frequency      */
     case 13: wdt_osc = 3100000; break;
     case 14: wdt_osc = 3200000; break;
     case 15: wdt_osc = 3400000; break;
-    default:;
-    }
+  }
   wdt_osc /= ((LPC_SYSCON->WDTOSCCTRL & 0x1F) << 1) + 2;
-
+ 
   switch (LPC_SYSCON->MAINCLKSEL & 0x03) {
     case 0:                             /* Internal RC oscillator             */
       SystemCoreClock = __IRC_OSC_CLK;
@@ -357,8 +356,7 @@ void SystemCoreClockUpdate (void)            /* Get Core Clock Frequency      */
           case 3:                       /* Reserved                           */
             SystemCoreClock = 0;
             break;
-          default:;
-          }
+      }
       break;
     case 2:                             /* WDT Oscillator                     */
       SystemCoreClock = wdt_osc;
@@ -389,13 +387,11 @@ void SystemCoreClockUpdate (void)            /* Get Core Clock Frequency      */
           case 3:                       /* Reserved                           */
             SystemCoreClock = 0;
             break;
-          default:;
-          }
+      }
       break;
-    default:;
-    }
+  }
 
-  SystemCoreClock /= LPC_SYSCON->SYSAHBCLKDIV;
+  SystemCoreClock /= LPC_SYSCON->SYSAHBCLKDIV;  
 
 }
 
@@ -426,7 +422,7 @@ void SystemInit (void)
 #if (SYSPLL_SETUP)                                /* System PLL Setup         */
   LPC_SYSCON->SYSPLLCTRL    = SYSPLLCTRL_Val;
   LPC_SYSCON->PDRUNCFG     &= ~(1 << 7);          /* Power-up SYSPLL          */
-  while (!(LPC_SYSCON->SYSPLLSTAT & 0x01));       /* Wait Until PLL Locked    */
+  while (!(LPC_SYSCON->SYSPLLSTAT & 0x01));	      /* Wait Until PLL Locked    */
 #endif
 #endif
 #if (WDTOSC_SETUP)                                /* Watchdog Oscillator Setup*/
