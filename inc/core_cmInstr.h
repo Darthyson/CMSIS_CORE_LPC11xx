@@ -455,13 +455,13 @@ __attribute__( ( always_inline ) ) __STATIC_INLINE int32_t __REVSH(int32_t value
 
     This function Rotate Right (immediate) provides the value of the contents of a register rotated by a variable number of bits.
 
-    \param [in]    op1  Value to rotate
-    \param [in]    op2  Number of Bits to rotate
-    \return             Rotated value
+    \param [in]    value  Value to rotate
+    \param [in]    value  Number of Bits to rotate
+    \return               Rotated value
  */
 __attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __ROR(uint32_t op1, uint32_t op2)
 {
-  return (op1 >> op2) | (op1 << (32 - op2));
+  return (op1 >> op2) | (op1 << (32 - op2)); 
 }
 
 

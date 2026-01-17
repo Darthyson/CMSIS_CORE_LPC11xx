@@ -501,7 +501,7 @@ typedef struct
  */
 
 /* Interrupt Priorities are WORD accessible only under ARMv6M                   */
-/* The following MACROS handle generation of the register factor and byte masks */
+/* The following MACROS handle generation of the register offset and byte masks */
 #define _BIT_SHIFT(IRQn)         (  (((uint32_t)(IRQn)       )    &  0x03) * 8 )
 #define _SHP_IDX(IRQn)           ( ((((uint32_t)(IRQn) & 0x0F)-8) >>    2)     )
 #define _IP_IDX(IRQn)            (   ((uint32_t)(IRQn)            >>    2)     )
