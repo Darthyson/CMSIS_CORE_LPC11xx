@@ -413,19 +413,20 @@ void SystemInit (void)
 #if (CLOCK_SETUP)                                 /* Clock Setup              */
 #if (SYSCLK_SETUP)                                /* System Clock Setup       */
 #if (SYSOSC_SETUP)                                /* System Oscillator Setup  */
+  uint32_t i;
 
   LPC_SYSCON->PDRUNCFG     &= ~(1 << 5);          /* Power-up System Osc      */
   LPC_SYSCON->SYSOSCCTRL    = SYSOSCCTRL_Val;
-  for (uint32_t i = 0; i < 200; i++) __NOP();
+  for (i = 0; i < 200; i++) __NOP();
   LPC_SYSCON->SYSPLLCLKSEL  = SYSPLLCLKSEL_Val;   /* Select PLL Input         */
   LPC_SYSCON->SYSPLLCLKUEN  = 0x01;               /* Update Clock Source      */
   LPC_SYSCON->SYSPLLCLKUEN  = 0x00;               /* Toggle Update Register   */
   LPC_SYSCON->SYSPLLCLKUEN  = 0x01;
-  while (!(LPC_SYSCON->SYSPLLCLKUEN & 0x01)){}    /* Wait Until Updated       */
+  while (!(LPC_SYSCON->SYSPLLCLKUEN & 0x01));     /* Wait Until Updated       */
 #if (SYSPLL_SETUP)                                /* System PLL Setup         */
   LPC_SYSCON->SYSPLLCTRL    = SYSPLLCTRL_Val;
   LPC_SYSCON->PDRUNCFG     &= ~(1 << 7);          /* Power-up SYSPLL          */
-  while (!(LPC_SYSCON->SYSPLLSTAT & 0x01)){}      /* Wait Until PLL Locked    */
+  while (!(LPC_SYSCON->SYSPLLSTAT & 0x01));       /* Wait Until PLL Locked    */
 #endif
 #endif
 #if (WDTOSC_SETUP)                                /* Watchdog Oscillator Setup*/
@@ -436,7 +437,7 @@ void SystemInit (void)
   LPC_SYSCON->MAINCLKUEN    = 0x01;               /* Update MCLK Clock Source */
   LPC_SYSCON->MAINCLKUEN    = 0x00;               /* Toggle Update Register   */
   LPC_SYSCON->MAINCLKUEN    = 0x01;
-  while (!(LPC_SYSCON->MAINCLKUEN & 0x01)){}      /* Wait Until Updated       */
+  while (!(LPC_SYSCON->MAINCLKUEN & 0x01));       /* Wait Until Updated       */
 #endif
 
   LPC_SYSCON->SYSAHBCLKDIV  = SYSAHBCLKDIV_Val;
