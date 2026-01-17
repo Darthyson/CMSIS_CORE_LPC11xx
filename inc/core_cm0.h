@@ -1,3 +1,4 @@
+#pragma GCC system_header
 /**************************************************************************//**
  * @file     core_cm0.h
  * @brief    CMSIS Cortex-M0 Core Peripheral Access Layer Header File

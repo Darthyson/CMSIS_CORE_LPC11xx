@@ -1,3 +1,4 @@
+#pragma GCC system_header
 /****************************************************************************
  *   $Id:: LPC11xx.h 9198 2012-02-22 01:04:53Z usb00175                     $
  *   Project: NXP LPC11xx software example

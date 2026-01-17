@@ -1,3 +1,4 @@
+#pragma GCC system_header
 /**************************************************************************//**
  * @file     core_cmInstr.h
  * @brief    CMSIS Cortex-M Core Instruction Access Header File

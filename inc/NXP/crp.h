@@ -1,3 +1,4 @@
+#pragma GCC system_header
 /****************************************************************************
  *   Description:
  *     Code Read Protection macros
