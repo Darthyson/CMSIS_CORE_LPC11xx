@@ -113,5 +113,64 @@
                 "CMSIS_CORE_LPC11xx_x64"
             ]
         }
+    ],
+    "workflowPresets": [
+        {
+            "name": "build-arm-all",
+            "description": "Build ARM target in Debug and Release configurations",
+            "displayName": "Build ARM (all configs)",
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "arm"
+                },
+                {
+                    "type": "build",
+                    "name": "release-arm"
+                },
+                {
+                    "type": "build",
+                    "name": "debug-arm"
+                }
+            ]
+        },
+        {
+            "name": "build-x64-all",
+            "description": "Build x64 target in Debug and Release configurations",
+            "displayName": "Build x64 (all configs)",
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "x64"
+                },
+                {
+                    "type": "build",
+                    "name": "release-x64"
+                },
+                {
+                    "type": "build",
+                    "name": "debug-x64"
+                }
+            ]
+        },
+        {
+            "name": "build-x86-all",
+            "description": "Build x86 target in Debug and Release configurations",
+            "displayName": "Build x86 (all configs)",
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "x86"
+                },
+                {
+                    "type": "build",
+                    "name": "release-x86"
+                },
+                {
+                    "type": "build",
+                    "name": "debug-x86"
+                }
+            ]
+        }
     ]
 }
